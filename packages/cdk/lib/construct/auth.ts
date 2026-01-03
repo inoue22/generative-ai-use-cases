@@ -1,6 +1,5 @@
 import { Duration } from 'aws-cdk-lib';
 import {
-  AccountRecovery,
   Mfa,
   UserPool,
   UserPoolClient,
@@ -69,7 +68,6 @@ export class Auth extends Construct {
           }
         : undefined,
       email: emailConfig,
-      accountRecovery: AccountRecovery.EMAIL_AND_PHONE_WITHOUT_MFA,
     });
 
     const client = userPool.addClient('client', {
