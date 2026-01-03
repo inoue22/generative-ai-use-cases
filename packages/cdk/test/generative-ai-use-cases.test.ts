@@ -34,6 +34,9 @@ describe('GenerativeAiUseCases', () => {
     samlAuthEnabled: false,
     samlCognitoDomainName: '',
     samlCognitoFederatedIdentityProviderName: '',
+    mfaEnabled: true,
+    mfaFromEmail: 'no-reply@example.com',
+    mfaReplyToEmail: null,
     modelRegion: 'us-east-1',
     modelIds: [
       {
