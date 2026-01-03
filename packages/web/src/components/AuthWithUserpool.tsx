@@ -48,6 +48,7 @@ const AuthWithUserpool: React.FC<Props> = (props) => {
 
   return (
     <Authenticator
+      loginMechanisms={['email']}
       hideSignUp={!selfSignUpEnabled}
       components={{
         Header: () => (
