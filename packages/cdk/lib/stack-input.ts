@@ -13,6 +13,9 @@ const baseStackInputSchema = z.object({
   samlAuthEnabled: z.boolean().default(false),
   samlCognitoDomainName: z.string().nullish(),
   samlCognitoFederatedIdentityProviderName: z.string().nullish(),
+  mfaEnabled: z.boolean().default(false),
+  mfaFromEmail: z.string(),
+  mfaReplyToEmail: z.string().nullish(),
   // Frontend
   hiddenUseCases: z
     .object({

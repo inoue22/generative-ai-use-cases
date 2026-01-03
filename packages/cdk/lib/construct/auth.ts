@@ -1,7 +1,10 @@
 import { Duration } from 'aws-cdk-lib';
 import {
+  AccountRecovery,
+  Mfa,
   UserPool,
   UserPoolClient,
+  UserPoolEmail,
   UserPoolOperation,
 } from 'aws-cdk-lib/aws-cognito';
 import {
@@ -19,6 +22,9 @@ export interface AuthProps {
   readonly allowedIpV6AddressRanges?: string[] | null;
   readonly allowedSignUpEmailDomains?: string[] | null;
   readonly samlAuthEnabled: boolean;
+  readonly mfaEnabled: boolean;
+  readonly mfaFromEmail: string;
+  readonly mfaReplyToEmail?: string | null;
 }
 
 export class Auth extends Construct {
@@ -28,6 +34,15 @@ export class Auth extends Construct {
 
   constructor(scope: Construct, id: string, props: AuthProps) {
     super(scope, id);
+
+    // Email configuration for MFA
+    const emailConfig = props.mfaEnabled
+      ? UserPoolEmail.withSES({
+          fromEmail: props.mfaFromEmail,
+          replyTo: props.mfaReplyToEmail ?? undefined,
+          sesVerifiedDomain: props.mfaFromEmail?.split('@').pop(),
+        })
+      : undefined;
 
     const userPool = new UserPool(this, 'UserPool', {
       // If SAML authentication is enabled, do not use self-sign-up with UserPool. Be aware of security.
@@ -44,6 +59,17 @@ export class Auth extends Construct {
         requireDigits: true,
         minLength: 8,
       },
+      // MFA configuration
+      mfa: props.mfaEnabled ? Mfa.REQUIRED : Mfa.OFF,
+      mfaSecondFactor: props.mfaEnabled
+        ? {
+            sms: false,
+            otp: false,
+            email: true,
+          }
+        : undefined,
+      email: emailConfig,
+      accountRecovery: AccountRecovery.EMAIL_AND_PHONE_WITHOUT_MFA,
     });
 
     const client = userPool.addClient('client', {

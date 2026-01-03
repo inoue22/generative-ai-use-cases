@@ -134,6 +134,9 @@ export class GenerativeAiUseCasesStack extends Stack {
       allowedIpV6AddressRanges: params.allowedIpV6AddressRanges,
       allowedSignUpEmailDomains: params.allowedSignUpEmailDomains,
       samlAuthEnabled: params.samlAuthEnabled,
+      mfaEnabled: params.mfaEnabled,
+      mfaFromEmail: params.mfaFromEmail,
+      mfaReplyToEmail: params.mfaReplyToEmail,
     });
 
     // Database

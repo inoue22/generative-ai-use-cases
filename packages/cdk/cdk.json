@@ -39,6 +39,9 @@
     "samlAuthEnabled": false,
     "samlCognitoDomainName": "",
     "samlCognitoFederatedIdentityProviderName": "",
+    "mfaEnabled": false,
+    "mfaFromEmail": "no-reply@example.com",
+    "mfaReplyToEmail": null,
     "hiddenUseCases": {},
     "modelRegion": "us-east-1",
     "modelIds": [
