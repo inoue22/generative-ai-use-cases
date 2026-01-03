@@ -74,6 +74,7 @@ export interface WebProps {
     logoPath?: string;
     title?: string;
   };
+  readonly mfaEnabled: boolean;
 }
 
 export class Web extends Construct {
@@ -314,6 +315,7 @@ export class Web extends Construct {
         ),
         VITE_APP_BRANDING_LOGO_PATH: props.brandingConfig?.logoPath ?? '',
         VITE_APP_BRANDING_TITLE: props.brandingConfig?.title ?? '',
+        VITE_APP_MFA_ENABLED: props.mfaEnabled.toString(),
       },
     });
     // Enhance computing resources

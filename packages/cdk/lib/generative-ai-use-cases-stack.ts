@@ -312,6 +312,8 @@ export class GenerativeAiUseCasesStack extends Stack {
       cognitoIdentityPoolProxyEndpoint: props.cognitoIdentityPoolProxyEndpoint,
       // Branding
       brandingConfig: params.brandingConfig,
+      // MFA
+      mfaEnabled: params.mfaEnabled,
     });
 
     // RAG

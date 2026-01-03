@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 const selfSignUpEnabled: boolean =
   import.meta.env.VITE_APP_SELF_SIGN_UP_ENABLED === 'true';
+const mfaEnabled: boolean = import.meta.env.VITE_APP_MFA_ENABLED === 'true';
 const speechToSpeechEventApiEndpoint: string = import.meta.env
   .VITE_APP_SPEECH_TO_SPEECH_EVENT_API_ENDPOINT;
 const cognitoUserPoolProxyEndpoint = import.meta.env
@@ -48,6 +49,7 @@ const AuthWithUserpool: React.FC<Props> = (props) => {
 
   return (
     <Authenticator
+      loginMechanisms={['email']}
       hideSignUp={!selfSignUpEnabled}
       components={{
         Header: () => (
@@ -55,6 +57,12 @@ const AuthWithUserpool: React.FC<Props> = (props) => {
             {t('auth.title')}
           </div>
         ),
+        // Hide Forgot Password link when MFA is enabled (Email cannot be used for password reset when email MFA is in use)
+        ...(mfaEnabled && {
+          SignIn: {
+            Footer: () => null,
+          },
+        }),
       }}>
       {props.children}
     </Authenticator>
